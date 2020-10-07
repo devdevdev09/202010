@@ -15,6 +15,6 @@ public class MainController {
     @RequestMapping("/test")
     @ResponseBody
     public void test(){
-        slack.send();
+        slack.send("test");
     }
 }
