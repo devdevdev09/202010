@@ -1,3 +1,6 @@
+priority:
+    list: KAKAOTALK,SLACK,LINE,TELEGRAM
+
 slack:
     webhook: ${slack.webhookurl}
     username: mgsbot
