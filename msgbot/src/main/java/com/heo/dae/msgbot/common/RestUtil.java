@@ -10,11 +10,14 @@ import java.util.Map;
 import javax.net.ssl.SSLContext;
 
 import com.heo.dae.msgbot.enums.Messengers;
+import com.heo.dae.msgbot.enums.Property;
+import com.heo.dae.msgbot.exception.PropertyException;
 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.TrustStrategy;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +29,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestUtil {
+public class RestUtil implements InitializingBean {
 
     @Autowired
     RestTemplate restTemplate;
@@ -83,5 +86,13 @@ public class RestUtil {
         }
 
         return headers;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if(LINE_CHANNEL_ACCESS_TOKEN.isEmpty()){
+            throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
+        }
+
     }
 }

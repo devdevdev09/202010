@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Slack implements InitializingBean, Messenger {
+public class Slack implements Messenger {
 
     @Value("${slack.webhook}")
     private String webhook;

@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
 import com.heo.dae.msgbot.enums.Messengers;
+import com.heo.dae.msgbot.enums.Property;
+import com.heo.dae.msgbot.exception.PropertyException;
 import com.heo.dae.msgbot.vo.line.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +35,12 @@ public class Line implements Messenger {
         }
 
         return false;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (PUSH_API_URL.isEmpty()) {
+            throw new PropertyException(Property.PUSH_API_URL);
+        }
     }
 }

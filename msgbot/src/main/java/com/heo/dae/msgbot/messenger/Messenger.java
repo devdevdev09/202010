@@ -1,6 +1,8 @@
 package com.heo.dae.msgbot.messenger;
 
-public interface Messenger {
+import org.springframework.beans.factory.InitializingBean;
+
+public interface Messenger extends InitializingBean {
 
     /**
      * 전송할 텍스트를 받아서 해당 메신저로 전송하고,
