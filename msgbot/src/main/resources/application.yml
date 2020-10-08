@@ -4,3 +4,8 @@ priority:
 slack:
     webhook: ${slack.webhookurl}
     username: mgsbot
+
+line:
+    channel_access_token: {$line.channel_access_token}
+    user_id: ${line.user_id}
+    push_api_url: https://api.line.me/v2/bot/message/push

@@ -1,20 +1,15 @@
 package com.heo.dae.msgbot.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import com.heo.dae.msgbot.enums.Messengers;
-import com.heo.dae.msgbot.messenger.Kakaotalk;
 import com.heo.dae.msgbot.messenger.Line;
 import com.heo.dae.msgbot.messenger.Slack;
-import com.heo.dae.msgbot.messenger.Telegram;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,8 +20,8 @@ public class MainController {
     @Autowired
     Slack slack;
 
-    // @Autowired
-    // Line line;
+    @Autowired
+    Line line;
 
     // @Autowired
     // Telegram Telegram;
@@ -34,8 +29,24 @@ public class MainController {
     @Value("${priority.list}")
     List<Messengers> list;
 
-    // @PostMapping("/send")
     @GetMapping("/send")
+    public void line(@RequestParam String msg,
+                    @RequestParam Messengers type){
+        
+        switch (type) {
+            case SLACK:
+                slack.send(msg);
+                break;
+            case LINE:
+                line.send(msg);        
+                break;
+            default:
+                break;
+        }
+    }
+
+    // @PostMapping("/send")
+    @GetMapping("/senddd")
     // public void test(@RequestBody Map<String, Object> requestBody){
     public void test(){
         // String msg = (String)requestBody.get("msg");
@@ -61,7 +72,5 @@ public class MainController {
                 }
             }
         }
-
-
     }
 }

@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
+import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,7 +40,7 @@ public class Slack implements InitializingBean, Messenger {
         req.put("text", msg);
 
         try {
-            restClientUtil.post(webhook, HttpMethod.POST, req);
+            restClientUtil.post(webhook, req, Messengers.SLACK);
             result = true;
         } catch (Exception e) {
             e.printStackTrace();
