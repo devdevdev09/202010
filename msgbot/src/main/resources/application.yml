@@ -1,3 +1,6 @@
+server:
+    port: 20010
+
 priority:
     list: KAKAOTALK,SLACK,LINE,TELEGRAM
 
