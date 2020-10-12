@@ -5,14 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.heo.dae.msgbot.vo.Values;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Message {
 
-    @Value("${line.user_id}")
-    String LINE_USER_ID;
+    @Autowired
+    Values values;
     
     Map<String, Object> req;
 
@@ -23,7 +25,7 @@ public class Message {
     public Map<String,Object> getRequest(String msg){
         req = new HashMap<String, Object>();
 
-        req.put("to", LINE_USER_ID);
+        req.put("to", values.LINE_USER_ID);
 
         List<Map<String,String>> messages = new ArrayList<Map<String,String>>();
         

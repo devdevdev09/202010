@@ -1,0 +1,23 @@
+package com.heo.dae.msgbot.vo;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Values {
+    @Value("${line.channel_access_token}")
+    public String LINE_CHANNEL_ACCESS_TOKEN;
+
+    @Value("${line.push_api_url}")
+    public String PUSH_API_URL;
+
+    @Value("${slack.webhook}")
+    public String webhook;
+
+    @Value("${slack.username}")
+    public String username;
+    
+    @Value("${line.user_id}")
+    public String LINE_USER_ID;
+
+}

@@ -1,5 +1,7 @@
 package com.heo.dae.msgbot.messenger;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.InitializingBean;
 
 public interface Messenger extends InitializingBean {
@@ -14,4 +16,8 @@ public interface Messenger extends InitializingBean {
      * 
      */
     public boolean send(String msg);
+
+    public Map<String, Object> setRequestBody();
+
+    public Map<String, Object> setMessage(String msg, Map<String, Object> requestBody);
 }

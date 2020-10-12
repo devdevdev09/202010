@@ -1,5 +1,6 @@
 package com.heo.dae.msgbot.common;
 
+import java.net.http.HttpResponse;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,7 @@ import javax.net.ssl.SSLContext;
 import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
+import com.heo.dae.msgbot.vo.Values;
 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -19,12 +21,13 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.TrustStrategy;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,13 +37,14 @@ public class RestUtil implements InitializingBean {
     @Autowired
     RestTemplate restTemplate;
 
-    @Value("${line.channel_access_token}")
-    String LINE_CHANNEL_ACCESS_TOKEN;
+    @Autowired
+    Values values;
 
     @Bean
     public RestTemplate restTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
         TrustStrategy acceptingTrustStrategy = (new TrustStrategy() {
 
+            // ssl 인증 무시
             @Override
             public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 // TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String
@@ -65,12 +69,25 @@ public class RestUtil implements InitializingBean {
         return restTemplate;
     }
 
-    public <T> void post(String url, Map<String, Object> req, Messengers type) throws Exception {
+    /**
+     * 
+     * @param <T>
+     * @param url
+     * @param req
+     * @param type
+     * @return api 호출 결과 상태 반환
+     * @throws Exception
+     */
+    public <T> int post(String url, Map<String, Object> req, Messengers type) throws Exception {
         HttpHeaders headers = createHttpHeaders(type);
-        
+
         HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(req, headers);
-        
-        restTemplate().postForLocation(url, entity);
+
+        ResponseEntity<String> response = restTemplate().exchange(url, HttpMethod.POST, entity, String.class);
+
+        int status = response.getStatusCodeValue();
+
+        return status;
     }
 
     /**
@@ -82,7 +99,7 @@ public class RestUtil implements InitializingBean {
         
         if(type.equals(Messengers.LINE)){
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Authorization", "Bearer " + LINE_CHANNEL_ACCESS_TOKEN);
+            headers.add("Authorization", "Bearer " + values.LINE_CHANNEL_ACCESS_TOKEN);
         }
 
         return headers;
@@ -90,7 +107,7 @@ public class RestUtil implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if(LINE_CHANNEL_ACCESS_TOKEN.isEmpty()){
+        if(values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty()){
             throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
         }
 

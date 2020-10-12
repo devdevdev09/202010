@@ -7,47 +7,59 @@ import com.heo.dae.msgbot.common.RestUtil;
 import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
+import com.heo.dae.msgbot.vo.Values;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Slack implements Messenger {
 
-    @Value("${slack.webhook}")
-    private String webhook;
-
-    @Value("${slack.username}")
-    private String username;
-
     @Autowired
     RestUtil restClientUtil;
 
+    @Autowired
+    Values values;
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (webhook.isEmpty()) {
+        if (values.webhook.isEmpty()) {
             throw new PropertyException(Property.SLACK_WEBHOOK);
         }
     }
 
     @Override
     public boolean send(String msg) {
-        boolean result = false;
-        Map<String, Object> req = new HashMap<String, Object>();
-        req.put("username", username);
-        req.put("text", msg);
+        int status = 0;
 
         try {
-            restClientUtil.post(webhook, req, Messengers.SLACK);
-            result = true;
+            Map<String, Object> requestBody;
+            
+            requestBody = setRequestBody();
+            requestBody = setMessage(msg, requestBody);
+            
+            status = restClientUtil.post(values.webhook, requestBody, Messengers.SLACK);
         } catch (Exception e) {
             e.printStackTrace();
-            result = false;
         }
         
-        return result;
+        return (status == 200) ? true : false;
+    }
+
+    @Override
+    public Map<String, Object> setRequestBody() {
+        Map<String, Object> requestBody = new HashMap<String, Object>();
+
+        requestBody.put("username", values.username);
+
+        return requestBody;
+    }
+
+    @Override
+    public Map<String, Object> setMessage(String msg, Map<String, Object> requestBody) {
+        requestBody.put("text", msg);
+
+        return requestBody;
     }
 
 }
