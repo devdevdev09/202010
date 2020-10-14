@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.heo.dae.msgbot.common.RestUtil;
 import com.heo.dae.msgbot.enums.Messengers;
@@ -27,10 +28,8 @@ public class Line implements Messenger {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty())
-            throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
-        if (values.PUSH_API_URL.isEmpty())
-            throw new PropertyException(Property.PUSH_API_URL);
+        Optional.ofNullable(values.LINE_CHANNEL_ACCESS_TOKEN).orElseThrow();
+        Optional.ofNullable(values.PUSH_API_URL).orElseThrow();
     }
 
     @Override
