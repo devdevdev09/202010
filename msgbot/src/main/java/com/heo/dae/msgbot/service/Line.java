@@ -25,9 +25,10 @@ public class Line implements Messenger {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (values.PUSH_API_URL.isEmpty()) {
+        if(values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty()) 
+            throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
+        if(values.PUSH_API_URL.isEmpty()) 
             throw new PropertyException(Property.PUSH_API_URL);
-        }
     }
 
     @Override

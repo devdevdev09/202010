@@ -32,7 +32,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestUtil implements InitializingBean {
+public class RestUtil{
 
     @Autowired
     RestTemplate restTemplate;
@@ -103,13 +103,5 @@ public class RestUtil implements InitializingBean {
         }
 
         return headers;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        if(values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty()){
-            throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
-        }
-
     }
 }
