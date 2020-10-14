@@ -34,12 +34,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestUtil{
 
-    @Autowired
-    RestTemplate restTemplate;
-
-    @Autowired
-    Values values;
-
     @Bean
     public RestTemplate restTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
         TrustStrategy acceptingTrustStrategy = (new TrustStrategy() {
@@ -78,10 +72,8 @@ public class RestUtil{
      * @return api 호출 결과 상태 반환
      * @throws Exception
      */
-    public <T> int post(String url, Map<String, Object> req, Messengers type) throws Exception {
-        HttpHeaders headers = createHttpHeaders(type);
-
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(req, headers);
+    public <T> int post(String url, Map<String, Object> body, HttpHeaders headers) throws Exception {
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(body, headers);
 
         ResponseEntity<String> response = restTemplate().exchange(url, HttpMethod.POST, entity, String.class);
 
@@ -90,18 +82,5 @@ public class RestUtil{
         return status;
     }
 
-    /**
-     * create header
-     * @return HttpHeaders
-     */
-    private HttpHeaders createHttpHeaders(Messengers type) {
-        HttpHeaders headers = new HttpHeaders();
-        
-        if(type.equals(Messengers.LINE)){
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Authorization", "Bearer " + values.LINE_CHANNEL_ACCESS_TOKEN);
-        }
 
-        return headers;
-    }
 }

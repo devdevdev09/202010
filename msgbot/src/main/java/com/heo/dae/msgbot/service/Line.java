@@ -11,6 +11,8 @@ import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
 import com.heo.dae.msgbot.vo.Values;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,16 +20,16 @@ public class Line implements Messenger {
     private final RestUtil restClientUtil;
     private final Values values;
 
-    public Line(RestUtil restClientUtil, Values values){
+    public Line(RestUtil restClientUtil, Values values) {
         this.restClientUtil = restClientUtil;
         this.values = values;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if(values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty()) 
+        if (values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty())
             throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
-        if(values.PUSH_API_URL.isEmpty()) 
+        if (values.PUSH_API_URL.isEmpty())
             throw new PropertyException(Property.PUSH_API_URL);
     }
 
@@ -40,7 +42,7 @@ public class Line implements Messenger {
             requestBody = setRequestBody();
             requestBody = setMessage(msg, requestBody);
 
-            status = restClientUtil.post(values.PUSH_API_URL, requestBody, Messengers.LINE);    
+            status = restClientUtil.post(values.PUSH_API_URL, requestBody, Messengers.LINE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,9 +62,9 @@ public class Line implements Messenger {
     @Override
     public Map<String, Object> setMessage(String msg, Map<String, Object> requestBody) {
         // 반드시 messages로 보내야 하는지??
-        List<Map<String,String>> messages = new ArrayList<Map<String,String>>();
-        
-        Map<String,String> message = new HashMap<String,String>();
+        List<Map<String, String>> messages = new ArrayList<Map<String, String>>();
+
+        Map<String, String> message = new HashMap<String, String>();
         message.put("type", "text");
         message.put("text", msg);
 
@@ -71,5 +73,19 @@ public class Line implements Messenger {
         requestBody.put("messages", messages);
 
         return requestBody;
+    }
+
+    /**
+     * create header
+     * @return HttpHeaders
+     */
+    @Override
+    public HttpHeaders createHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", "Bearer " + values.LINE_CHANNEL_ACCESS_TOKEN);
+
+        return headers;
     }
 }

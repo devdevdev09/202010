@@ -2,7 +2,10 @@ package com.heo.dae.msgbot.service;
 
 import java.util.Map;
 
+import com.heo.dae.msgbot.enums.Messengers;
+
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpHeaders;
 
 public interface Messenger extends InitializingBean {
 
@@ -20,4 +23,6 @@ public interface Messenger extends InitializingBean {
     public Map<String, Object> setRequestBody();
 
     public Map<String, Object> setMessage(String msg, Map<String, Object> requestBody);
+
+    public HttpHeaders createHeaders();
 }

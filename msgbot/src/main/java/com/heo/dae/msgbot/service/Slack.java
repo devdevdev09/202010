@@ -9,6 +9,7 @@ import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
 import com.heo.dae.msgbot.vo.Values;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +18,7 @@ public class Slack implements Messenger {
     private final RestUtil restClientUtil;
     private final Values values;
 
-    public Slack(RestUtil restClRestUtil, Values values){
+    public Slack(RestUtil restClRestUtil, Values values) {
         this.restClientUtil = restClRestUtil;
         this.values = values;
     }
@@ -35,15 +36,15 @@ public class Slack implements Messenger {
 
         try {
             Map<String, Object> requestBody;
-            
+
             requestBody = setRequestBody();
             requestBody = setMessage(msg, requestBody);
-            
+
             status = restClientUtil.post(values.WEBHOOK, requestBody, Messengers.SLACK);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return (status == 200) ? true : false;
     }
 
@@ -61,6 +62,11 @@ public class Slack implements Messenger {
         requestBody.put("text", msg);
 
         return requestBody;
+    }
+
+    @Override
+    public HttpHeaders createHeaders() {
+        return null;
     }
 
 }
