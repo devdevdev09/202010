@@ -1,4 +1,4 @@
-package com.heo.dae.msgbot.messenger;
+package com.heo.dae.msgbot.service;
 
 import java.util.Map;
 

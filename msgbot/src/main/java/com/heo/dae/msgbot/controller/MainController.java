@@ -1,33 +1,23 @@
 package com.heo.dae.msgbot.controller;
 
-import java.util.List;
-
 import com.heo.dae.msgbot.enums.Messengers;
-import com.heo.dae.msgbot.messenger.Line;
-import com.heo.dae.msgbot.messenger.Slack;
+import com.heo.dae.msgbot.service.Messenger;
+import com.heo.dae.msgbot.vo.Values;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MainController {
-    // @Autowired
-    // Kakaotalk kakaotalk;
+    private final Messenger slack, line;
+    private final Values values;
 
-    @Autowired
-    Slack slack;
-
-    @Autowired
-    Line line;
-
-    // @Autowired
-    // Telegram Telegram;
-
-    @Value("${priority.list}")
-    List<Messengers> list;
+    public MainController(Messenger slack,Messenger line, Values values){
+        this.slack = slack;
+        this.line = line;
+        this.values = values;
+    }
 
     @GetMapping("/send")
     public void line(@RequestParam String msg,
@@ -53,7 +43,7 @@ public class MainController {
         // 설정한 우선순위로 메시지 발송
 
         // 순회 방법 고민....
-        for(Messengers messenger : list){
+        for(Messengers messenger : values.PRIORITY_LIST){
             if(messenger.equals(Messengers.KAKAOTALK)){
                 System.out.println("카카오톡 발송");
             }else{
