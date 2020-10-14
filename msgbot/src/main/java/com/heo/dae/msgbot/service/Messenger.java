@@ -2,8 +2,6 @@ package com.heo.dae.msgbot.service;
 
 import java.util.Map;
 
-import com.heo.dae.msgbot.enums.Messengers;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpHeaders;
 
