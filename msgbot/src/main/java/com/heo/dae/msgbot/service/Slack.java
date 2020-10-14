@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
-import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
 import com.heo.dae.msgbot.vo.Values;
@@ -35,12 +34,13 @@ public class Slack implements Messenger {
         int status = 0;
 
         try {
-            Map<String, Object> requestBody;
+            HttpHeaders headers = createHeaders();
 
+            Map<String, Object> requestBody;
             requestBody = setRequestBody();
             requestBody = setMessage(msg, requestBody);
 
-            status = restClientUtil.post(values.WEBHOOK, requestBody, Messengers.SLACK);
+            status = restClientUtil.post(values.WEBHOOK, requestBody, headers);
         } catch (Exception e) {
             e.printStackTrace();
         }

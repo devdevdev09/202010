@@ -38,11 +38,13 @@ public class Line implements Messenger {
         int status = 0;
 
         try {
+            HttpHeaders headers = createHeaders();
+            
             Map<String, Object> requestBody;
             requestBody = setRequestBody();
             requestBody = setMessage(msg, requestBody);
 
-            status = restClientUtil.post(values.PUSH_API_URL, requestBody, Messengers.LINE);
+            status = restClientUtil.post(values.PUSH_API_URL, requestBody, headers);
         } catch (Exception e) {
             e.printStackTrace();
         }
