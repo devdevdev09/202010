@@ -6,14 +6,14 @@ import java.util.Map;
 import com.heo.dae.msgbot.common.RestUtil;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
+import com.heo.dae.msgbot.interfaces.MessengerDetail;
 import com.heo.dae.msgbot.vo.Values;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Slack implements Messenger {
-
+public class Slack implements MessengerDetail {
     private final RestUtil restClientUtil;
     private final Values values;
 

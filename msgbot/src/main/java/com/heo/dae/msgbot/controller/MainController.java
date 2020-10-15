@@ -1,66 +1,29 @@
 package com.heo.dae.msgbot.controller;
 
-import com.heo.dae.msgbot.enums.Messengers;
-import com.heo.dae.msgbot.service.Messenger;
-import com.heo.dae.msgbot.vo.Values;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.heo.dae.msgbot.enums.Messengers;
+import com.heo.dae.msgbot.interfaces.Messenger;
+import com.heo.dae.msgbot.vo.MsgBody;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MainController {
-    private final Messenger slack, line;
-    private final Values values;
+    private final Messenger messengerImpl;
 
-    public MainController(Messenger slack,Messenger line, Values values){
-        this.slack = slack;
-        this.line = line;
-        this.values = values;
+    public MainController(Messenger messengerImpl) {
+        this.messengerImpl = messengerImpl;
     }
 
-    @GetMapping("/send")
-    public void line(@RequestParam String msg,
-                    @RequestParam Messengers type){
-        
-        switch (type) {
-            case SLACK:
-                slack.send(msg);
-                break;
-            case LINE:
-                line.send(msg);        
-                break;
-            default:
-                break;
-        }
-    }
+    @PostMapping("/send")
+    public void send(@RequestBody MsgBody body) {
+        List<Messengers> list = body.getTypeList().stream().distinct().collect(Collectors.toList());
+        String msg = body.getMessage();
 
-    // @PostMapping("/send")
-    @GetMapping("/senddd")
-    // public void test(@RequestBody Map<String, Object> requestBody){
-    public void test(){
-        // String msg = (String)requestBody.get("msg");
-        // 설정한 우선순위로 메시지 발송
-
-        // 순회 방법 고민....
-        for(Messengers messenger : values.PRIORITY_LIST){
-            if(messenger.equals(Messengers.KAKAOTALK)){
-                System.out.println("카카오톡 발송");
-            }else{
-                if(messenger.equals(Messengers.SLACK)){
-                    System.out.println("슬랙 발송");
-                }else{
-                    if(messenger.equals(Messengers.LINE)){
-                        System.out.println("라인 발송");
-                    }else{
-                        if(messenger.equals(Messengers.TELEGRAM)){
-                            System.out.println("텔레그램 발송");
-                        }else{
-                            System.out.println("발송 X");
-                        }
-                    }
-                }
-            }
-        }
+        messengerImpl.send(msg, list);
     }
 }

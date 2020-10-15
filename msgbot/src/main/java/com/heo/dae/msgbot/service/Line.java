@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import com.heo.dae.msgbot.common.RestUtil;
-import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
+import com.heo.dae.msgbot.interfaces.MessengerDetail;
 import com.heo.dae.msgbot.vo.Values;
 
 import org.springframework.http.HttpHeaders;
@@ -17,19 +16,13 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Line implements Messenger {
+public class Line implements MessengerDetail {
     private final RestUtil restClientUtil;
     private final Values values;
 
     public Line(RestUtil restClientUtil, Values values) {
         this.restClientUtil = restClientUtil;
         this.values = values;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Optional.ofNullable(values.LINE_CHANNEL_ACCESS_TOKEN).orElseThrow();
-        Optional.ofNullable(values.PUSH_API_URL).orElseThrow();
     }
 
     @Override
@@ -88,5 +81,15 @@ public class Line implements Messenger {
         headers.add("Authorization", "Bearer " + values.LINE_CHANNEL_ACCESS_TOKEN);
 
         return headers;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty()) {
+            throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
+        }
+        if (values.LINE_USER_ID.isEmpty()) {
+            throw new PropertyException(Property.LINE_USER_ID);
+        }
     }
 }

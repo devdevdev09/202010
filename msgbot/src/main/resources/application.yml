@@ -12,3 +12,8 @@ line:
     channel_access_token: {$line.channel_access_token}
     user_id: ${line.user_id}
     push_api_url: https://api.line.me/v2/bot/message/push
+
+# spring boot의 기본 properties
+server.error:
+  include-exception: false
+  include-stacktrace: never # 오류 응답에 stacktrace 내용을 포함할 지 여부
