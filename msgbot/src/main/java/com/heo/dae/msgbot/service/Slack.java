@@ -1,6 +1,5 @@
 package com.heo.dae.msgbot.service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
@@ -16,10 +15,12 @@ import org.springframework.stereotype.Service;
 public class Slack implements MessengerDetail {
     private final RestUtil restClientUtil;
     private final Values values;
+    private final RequestDataImpl requestDataImpl;
 
-    public Slack(RestUtil restClRestUtil, Values values) {
+    public Slack(RestUtil restClRestUtil, Values values, RequestDataImpl requestDataImpl) {
         this.restClientUtil = restClRestUtil;
         this.values = values;
+        this.requestDataImpl = requestDataImpl;
     }
 
     @Override
@@ -34,11 +35,8 @@ public class Slack implements MessengerDetail {
         int status = 0;
 
         try {
-            HttpHeaders headers = createHeaders();
-
-            Map<String, Object> requestBody;
-            requestBody = setRequestBody();
-            requestBody = setMessage(msg, requestBody);
+            HttpHeaders headers = requestDataImpl.setRequestHeader(this);
+            Map<String, Object> requestBody = requestDataImpl.setRequestBody(this, msg);
 
             status = restClientUtil.post(values.WEBHOOK, requestBody, headers);
         } catch (Exception e) {
@@ -46,27 +44,6 @@ public class Slack implements MessengerDetail {
         }
 
         return (status == 200) ? true : false;
-    }
-
-    @Override
-    public Map<String, Object> setRequestBody() {
-        Map<String, Object> requestBody = new HashMap<String, Object>();
-
-        requestBody.put("username", values.USERNAME);
-
-        return requestBody;
-    }
-
-    @Override
-    public Map<String, Object> setMessage(String msg, Map<String, Object> requestBody) {
-        requestBody.put("text", msg);
-
-        return requestBody;
-    }
-
-    @Override
-    public HttpHeaders createHeaders() {
-        return null;
     }
 
 }
