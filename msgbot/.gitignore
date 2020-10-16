@@ -32,6 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 ../.vscode/
+../.vscode/*
 
 # Windows thumbnail cache files
 Thumbs.db
@@ -61,7 +62,7 @@ $RECYCLE.BIN/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
-!.vscode/launch.json
+# !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
 
