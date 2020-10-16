@@ -3,6 +3,7 @@ package com.heo.dae.msgbot.service;
 import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
+import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.enums.Property;
 import com.heo.dae.msgbot.exception.PropertyException;
 import com.heo.dae.msgbot.interfaces.MessengerDetail;
@@ -28,8 +29,8 @@ public class Line implements MessengerDetail {
         int status = 0;
 
         try {
-            HttpHeaders headers = requestDataImpl.setRequestHeader(this);
-            Map<String, Object> requestBody = requestDataImpl.setRequestBody(this, msg);
+            HttpHeaders headers = requestDataImpl.setRequestHeader(Messengers.LINE);
+            Map<String, Object> requestBody = requestDataImpl.setRequestBody(Messengers.LINE, msg);
 
             status = restClientUtil.post(values.PUSH_API_URL, requestBody, headers);
         } catch (Exception e) {
