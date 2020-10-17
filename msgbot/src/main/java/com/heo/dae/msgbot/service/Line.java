@@ -4,8 +4,6 @@ import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
 import com.heo.dae.msgbot.enums.Messengers;
-import com.heo.dae.msgbot.enums.Property;
-import com.heo.dae.msgbot.exception.PropertyException;
 import com.heo.dae.msgbot.interfaces.MessengerDetail;
 import com.heo.dae.msgbot.vo.Values;
 
@@ -38,15 +36,5 @@ public class Line implements MessengerDetail {
         }
 
         return (status == 200) ? true : false;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        if (values.LINE_CHANNEL_ACCESS_TOKEN.isEmpty()) {
-            throw new PropertyException(Property.LINE_CHANNEL_ACCESS_TOKEN);
-        }
-        if (values.LINE_USER_ID.isEmpty()) {
-            throw new PropertyException(Property.LINE_USER_ID);
-        }
     }
 }

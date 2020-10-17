@@ -1,7 +1,5 @@
 package com.heo.dae.msgbot.interfaces;
 
-import org.springframework.beans.factory.InitializingBean;
-
-public interface MessengerDetail extends InitializingBean {
+public interface MessengerDetail {
     public boolean send(String msg);
 }
