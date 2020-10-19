@@ -40,6 +40,15 @@ public class RequestDataImpl implements RequestData {
             messages.add(message);
 
             requestBody.put("messages", messages);
+        }else if(type.equals(Messengers.KAKAOTALK)){
+            Map<String, Object> template_object = new HashMap<String, Object>();
+            template_object.put("object_type", "text");
+            template_object.put("text", "spring boot test kakao rest");
+            template_object.put("link", null);
+            String s = "object_type=text&text=Springboot_test_kakao_rest&link=null";
+
+            requestBody.put("template_object", s);
+
         }
         
         return requestBody;
@@ -52,6 +61,10 @@ public class RequestDataImpl implements RequestData {
         if(type.equals(Messengers.LINE)){
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Authorization", "Bearer " + values.LINE_CHANNEL_ACCESS_TOKEN);
+        }else if(type.equals(Messengers.KAKAOTALK)){
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            
+            headers.add("Authorization", "Bearer 3d2AadkpAq-VT4kq11nf4LVtorDbWKSv49A3bgo9dNkAAAF1P9p5SA");
         }
 
         return headers;
@@ -71,8 +84,10 @@ public class RequestDataImpl implements RequestData {
             url  = values.PUSH_API_URL;
         }else if(type.equals(Messengers.SLACK)){
             url = values.WEBHOOK;
+        }else if(type.equals(Messengers.KAKAOTALK)){
+            url = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
         }
-        
+
         return url;
     }
     

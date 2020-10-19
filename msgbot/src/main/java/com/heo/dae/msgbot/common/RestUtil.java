@@ -5,6 +5,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.SSLContext;
@@ -20,6 +21,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -71,6 +74,24 @@ public class RestUtil{
         int status = response.getStatusCodeValue();
 
         return status;
+    }
+
+    // x-www-urlencoded
+    public <T> int post2(String url, Map<String, Object> body, HttpHeaders headers) throws Exception {
+        MultiValueMap<String, Object> form = new LinkedMultiValueMap<String, Object>();
+
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("object_type", "text");
+        map.put("text", "text");
+        map.put("object_type", "text");
+
+        form.add("template_object", map);
+
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(form, headers);
+
+        restTemplate().postForLocation(url, entity);
+
+        return 1;
     }
 
 

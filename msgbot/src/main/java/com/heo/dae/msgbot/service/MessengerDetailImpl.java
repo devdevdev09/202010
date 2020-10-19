@@ -1,12 +1,15 @@
 package com.heo.dae.msgbot.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.heo.dae.msgbot.common.RestUtil;
 import com.heo.dae.msgbot.enums.Messengers;
 import com.heo.dae.msgbot.interfaces.MessengerDetail;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +33,7 @@ public class MessengerDetailImpl implements MessengerDetail {
             Map<String, Object> requestBody = requestDataImpl.setRequestBody(type, msg);
             String url = requestDataImpl.getUrl(type);
 
-            status = restClientUtil.post(url, requestBody, headers);
+            status = restClientUtil.post2(url, requestBody, headers);
         } catch (Exception e) {
             e.printStackTrace();
         }
