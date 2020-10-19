@@ -26,17 +26,4 @@ public class Values {
 
     @Value("${priority.list}")
     public List<Messengers> PRIORITY_LIST;
-
-    public String getUrl(Messengers type){
-        String url = "";
-
-        if(type.equals(Messengers.LINE)){
-            url = PUSH_API_URL;
-        }else if(type.equals(Messengers.SLACK)){
-            url = WEBHOOK;
-        }
-
-        return url;
-    }
-
 }
