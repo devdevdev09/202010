@@ -10,4 +10,5 @@ public interface RequestData {
     public Map<String, Object> setRequestBody(Messengers type, String msg);
     public HttpHeaders setRequestHeader(Messengers type);
     public MessengerDetail getMessenger(Messengers type);
+    public String getUrl(Messengers type);
 }

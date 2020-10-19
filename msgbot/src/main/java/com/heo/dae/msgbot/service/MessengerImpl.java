@@ -10,32 +10,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessengerImpl implements Messenger {
-    private final MessengerDetail slack, line;
+    private final MessengerDetail messengerDetailImpl;
 
-    public MessengerImpl(MessengerDetail slack, MessengerDetail line) {
-        this.slack = slack;
-        this.line = line;
+    public MessengerImpl(MessengerDetail messengerDetailImpl) {
+        this.messengerDetailImpl = messengerDetailImpl;
     }
 
     @Override
     public void send(String msg, List<Messengers> list) {
         for (Messengers type : list) {
             try {
-                getMessenger(type).send(msg);
+                messengerDetailImpl.setType(type);
+                messengerDetailImpl.send(msg);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public MessengerDetail getMessenger(Messengers type) throws Exception {
-        switch (type) {
-            case SLACK:
-                return slack;
-            case LINE:
-                return line;
-            default:
-                throw new Exception("설정된 타입이 아닙니다.");
         }
     }
 }

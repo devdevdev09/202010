@@ -10,14 +10,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Slack implements MessengerDetail {
+public class MessengerDetailImpl implements MessengerDetail {
     private final RestUtil restClientUtil;
     private final RequestDataImpl requestDataImpl;
-
+    
     private Messengers type;
 
-    public Slack(RestUtil restClRestUtil, RequestDataImpl requestDataImpl) {
-        this.restClientUtil = restClRestUtil;
+    public MessengerDetailImpl(RestUtil restClientUtil, RequestDataImpl requestDataImpl) {
+        this.restClientUtil = restClientUtil;
         this.requestDataImpl = requestDataImpl;
     }
 
@@ -42,5 +42,5 @@ public class Slack implements MessengerDetail {
     public void setType(Messengers type) {
         this.type = type;
     }
-
+    
 }

@@ -62,5 +62,18 @@ public class RequestDataImpl implements RequestData {
 
         return null;
     }
+
+    @Override
+    public String getUrl(Messengers type) {
+        String url = "";
+
+        if(type.equals(Messengers.LINE)){
+            url  = values.PUSH_API_URL;
+        }else if(type.equals(Messengers.SLACK)){
+            url = values.WEBHOOK;
+        }
+        
+        return url;
+    }
     
 }
