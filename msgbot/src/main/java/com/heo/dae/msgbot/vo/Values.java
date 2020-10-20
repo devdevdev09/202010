@@ -26,4 +26,7 @@ public class Values {
 
     @Value("${priority.list}")
     public List<Messengers> PRIORITY_LIST;
+
+    @Value("${kakao.bearer.key")
+    public String KAKAO_BEARER_KEY;
 }

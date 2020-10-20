@@ -64,7 +64,7 @@ public class RequestDataImpl implements RequestData {
         }else if(type.equals(Messengers.KAKAOTALK)){
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             
-            headers.add("Authorization", "Bearer 3d2AadkpAq-VT4kq11nf4LVtorDbWKSv49A3bgo9dNkAAAF1P9p5SA");
+            headers.add("Authorization", "Bearer " + values.KAKAO_BEARER_KEY);
         }
 
         return headers;
