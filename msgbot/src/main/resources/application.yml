@@ -1,5 +1,6 @@
 server:
     port: 20010
+    address: 127.0.0.1
 
 priority:
     list: KAKAOTALK,SLACK,LINE,TELEGRAM
