@@ -34,7 +34,7 @@ public class MainController {
         List<Messengers> list = new ArrayList<>();
         list.add(Messengers.KAKAOTALK);
 
-        String msg = "TEST MSGGGGGGGG";
+        String msg = "test message";
 
         messengerImpl.send(msg, list);
     }
