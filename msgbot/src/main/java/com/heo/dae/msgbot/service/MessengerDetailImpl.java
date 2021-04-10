@@ -30,7 +30,7 @@ public class MessengerDetailImpl implements MessengerDetail {
             Map<String, Object> requestBody = requestDataImpl.setRequestBody(type, msg);
             String url = requestDataImpl.getUrl(type);
 
-            status = restClientUtil.post2(url, requestBody, headers);
+            status = restClientUtil.post(url, requestBody, headers);
         } catch (Exception e) {
             e.printStackTrace();
         }

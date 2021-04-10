@@ -29,6 +29,16 @@ public class MainController {
         messengerImpl.send(msg, list);
     }
 
+    @GetMapping("/sendtest")
+    public void send(String msg) {
+        List<Messengers> list = new ArrayList<>();
+        list.add(Messengers.SLACK);
+
+        String msgs = "test message";
+
+        messengerImpl.send(msgs, list);
+    }
+
     @GetMapping("/send")
     public void send() {
         List<Messengers> list = new ArrayList<>();

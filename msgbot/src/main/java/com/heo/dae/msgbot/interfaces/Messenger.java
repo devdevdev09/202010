@@ -15,5 +15,5 @@ public interface Messenger{
      * @return 메시지 전송 성공/실패를 리턴한다. 
      * 
      */
-	public void send(String msg, List<Messengers> list);
+	public boolean send(String msg, List<Messengers> list);
 }

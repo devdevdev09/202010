@@ -17,14 +17,18 @@ public class MessengerImpl implements Messenger {
     }
 
     @Override
-    public void send(String msg, List<Messengers> list) {
+    public boolean send(String msg, List<Messengers> list) {
+        boolean result = false;
         for (Messengers type : list) {
             try {
                 messengerDetailImpl.setType(type);
-                messengerDetailImpl.send(msg);
+                result = messengerDetailImpl.send(msg);
+
+                return result;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        return result;
     }
 }
