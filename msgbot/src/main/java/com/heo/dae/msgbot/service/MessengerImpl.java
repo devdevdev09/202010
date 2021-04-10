@@ -8,13 +8,13 @@ import com.heo.dae.msgbot.interfaces.MessengerDetail;
 
 import org.springframework.stereotype.Service;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MessengerImpl implements Messenger {
     private final MessengerDetail messengerDetailImpl;
-
-    public MessengerImpl(MessengerDetail messengerDetailImpl) {
-        this.messengerDetailImpl = messengerDetailImpl;
-    }
 
     @Override
     public boolean send(String msg, List<Messengers> list) {

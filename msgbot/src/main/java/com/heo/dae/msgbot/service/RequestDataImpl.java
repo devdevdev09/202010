@@ -14,13 +14,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class RequestDataImpl implements RequestData {
     private final Values values;
-
-    public RequestDataImpl(Values values){
-        this.values = values;
-    }
 
     @Override
     public Map<String, Object> setRequestBody(Messengers type, String msg) {

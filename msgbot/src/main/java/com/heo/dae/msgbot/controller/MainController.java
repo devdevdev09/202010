@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class MainController {
     private final Messenger messengerImpl;
-
-    public MainController(Messenger messengerImpl) {
-        this.messengerImpl = messengerImpl;
-    }
 
     @PostMapping("/send")
     public void send(@RequestBody MsgBody body) {

@@ -9,17 +9,15 @@ import com.heo.dae.msgbot.interfaces.MessengerDetail;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MessengerDetailImpl implements MessengerDetail {
     private final RestUtil restClientUtil;
     private final RequestDataImpl requestDataImpl;
     
     private Messengers type;
-
-    public MessengerDetailImpl(RestUtil restClientUtil, RequestDataImpl requestDataImpl) {
-        this.restClientUtil = restClientUtil;
-        this.requestDataImpl = requestDataImpl;
-    }
 
     @Override
     public boolean send(String msg) {
