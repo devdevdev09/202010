@@ -40,11 +40,13 @@ public class MainController {
     }
 
     @GetMapping("/send")
-    public void sendSlack(String msg) {
+    public boolean sendSlack(String msg) {
         List<Messengers> list = new ArrayList<>();
         list.add(Messengers.SLACK);
 
-        messengerImpl.send(msg, list);
+        boolean result = messengerImpl.send(msg, list);
+
+        return result;
     }
 
     // @GetMapping("/send")
