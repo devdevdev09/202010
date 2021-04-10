@@ -1,13 +1,13 @@
-package com.heo.dae.msgbot;
+// package com.heo.dae.msgbot;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class MsgbotApplicationTests {
+// @SpringBootTest
+// class MsgbotApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }
