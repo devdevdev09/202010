@@ -5,13 +5,13 @@ server:
 priority:
     list: KAKAOTALK,SLACK,LINE,TELEGRAM
 
-slack:
-    webhook: ${slack.webhookurl}
-    username: mgsbot
+# slack:
+#     webhook: ${slack.webhookurl}
+#     username: mgsbot
 
 line:
-    channel_access_token: {$line.channel_access_token}
-    user_id: ${line.user_id}
+    # channel_access_token: {$line.channel_access_token}
+    # user_id: ${line.user_id}
     push_api_url: https://api.line.me/v2/bot/message/push
 
 # spring boot의 기본 properties
