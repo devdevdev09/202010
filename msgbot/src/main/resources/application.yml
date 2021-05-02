@@ -5,9 +5,9 @@ server:
 priority:
     list: KAKAOTALK,SLACK,LINE,TELEGRAM
 
-# slack:
-#     webhook: ${slack.webhookurl}
-#     username: mgsbot
+slack:
+    webhook: ${slack.webhookurl}
+    username: mgsbot
 
 line:
     # channel_access_token: {$line.channel_access_token}
