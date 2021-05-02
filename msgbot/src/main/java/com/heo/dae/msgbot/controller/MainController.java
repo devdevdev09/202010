@@ -38,8 +38,9 @@ public class MainController {
         messengerImpl.send(msgs, list);
     }
 
-    @GetMapping("/send")
+    @PostMapping("/sendslack")
     public boolean sendSlack(String msg) {
+        if(msg == null) msg = "test msg";
         List<Messengers> list = new ArrayList<>();
         list.add(Messengers.SLACK);
 
