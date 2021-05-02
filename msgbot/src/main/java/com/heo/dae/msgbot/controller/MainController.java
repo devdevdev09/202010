@@ -48,14 +48,5 @@ public class MainController {
 
         return result;
     }
-
-    // @GetMapping("/send")
-    // public void send() {
-    //     List<Messengers> list = new ArrayList<>();
-    //     list.add(Messengers.KAKAOTALK);
-
-    //     String msg = "test message";
-
-    //     messengerImpl.send(msg, list);
-    // }
+    
 }
